@@ -1,5 +1,6 @@
 import React from 'react';
 import { Edit, Trash2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Button } from './Button';
 
 interface Column {
@@ -23,6 +24,8 @@ export const Table: React.FC<TableProps> = ({
   onDelete, 
   loading = false 
 }) => {
+  const { t } = useTranslation();
+  
   if (loading) {
     return (
       <div className="bg-white rounded-lg shadow overflow-hidden">
@@ -51,8 +54,8 @@ export const Table: React.FC<TableProps> = ({
                 </th>
               ))}
               {(onEdit || onDelete) && (
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  {t('common.actions')}
                 </th>
               )}
             </tr>
@@ -64,20 +67,20 @@ export const Table: React.FC<TableProps> = ({
                   colSpan={columns.length + (onEdit || onDelete ? 1 : 0)} 
                   className="px-6 py-12 text-center text-gray-500"
                 >
-                  No data available
+                  {t('common.noData')}
                 </td>
               </tr>
             ) : (
               data.map((row, index) => (
                 <tr key={row.id || index} className="hover:bg-gray-50 transition-colors">
                   {columns.map((column) => (
-                    <td key={column.key} className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td key={column.key} className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right">
                       {column.render ? column.render(row[column.key], row) : row[column.key]}
                     </td>
                   ))}
                   {(onEdit || onDelete) && (
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <div className="flex justify-end space-x-2">
+                    <td className="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
+                      <div className="flex justify-start space-x-2">
                         {onEdit && (
                           <Button
                             size="sm"

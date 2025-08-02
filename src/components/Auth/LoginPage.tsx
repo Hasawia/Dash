@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { LogIn, Mail, Lock, AlertCircle, CheckCircle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../UI/Button';
 import { Input } from '../UI/Input';
 import { BASE_URL } from '../../constants';
@@ -9,6 +10,7 @@ interface LoginPageProps {
 }
 
 export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -45,18 +47,18 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
           localStorage.setItem('authToken', data.token);
         }
         
-        setMessage({ type: 'success', text: 'Login successful' });
+        setMessage({ type: 'success', text: t('auth.loginSuccessful') });
         
         // Call success callback after a short delay to show the success message
         setTimeout(() => {
           onLoginSuccess();
         }, 1500);
       } else {
-        setMessage({ type: 'error', text: 'Login failed. Please check your credentials.' });
+        setMessage({ type: 'error', text: t('auth.loginFailed') });
       }
     } catch (error) {
       console.error('Login error:', error);
-      setMessage({ type: 'error', text: 'Login failed. Please check your credentials.' });
+      setMessage({ type: 'error', text: t('auth.loginFailed') });
     } finally {
       setLoading(false);
     }
@@ -69,8 +71,8 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
           <div className="inline-flex items-center justify-center w-16 h-16 bg-[#0e4d3c] rounded-full mb-4">
             <LogIn className="w-8 h-8 text-white" />
           </div>
-          <h1 className="text-3xl font-bold text-[#0e4d3c] mb-2">Welcome Back</h1>
-          <p className="text-gray-600">Sign in to your Yakhtimoon account</p>
+          <h1 className="text-3xl font-bold text-[#0e4d3c] mb-2">{t('auth.welcomeBack')}</h1>
+          <p className="text-gray-600">{t('auth.signInToAccount')}</p>
         </div>
 
         {message && (
@@ -94,25 +96,25 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="relative">
-            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <Mail className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
             <Input
               type="email"
-              placeholder="Enter your email"
+              placeholder={t('auth.enterEmail')}
               value={formData.email}
               onChange={(e) => handleChange('email', e.target.value)}
-              className="pl-12"
+              className="pr-12"
               required
             />
           </div>
 
           <div className="relative">
-            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <Lock className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
             <Input
               type="password"
-              placeholder="Enter your password"
+              placeholder={t('auth.enterPassword')}
               value={formData.password}
               onChange={(e) => handleChange('password', e.target.value)}
-              className="pl-12"
+              className="pr-12"
               required
             />
           </div>
@@ -122,13 +124,13 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
             className="w-full py-3 text-base font-semibold"
             loading={loading}
           >
-            {loading ? 'Signing in...' : 'Sign In'}
+            {loading ? t('auth.signingIn') : t('auth.signIn')}
           </Button>
         </form>
 
         <div className="mt-8 text-center">
           <p className="text-sm text-gray-500">
-            Secure login powered by Yakhtimoon
+            {t('auth.secureLogin')}
           </p>
         </div>
       </div>

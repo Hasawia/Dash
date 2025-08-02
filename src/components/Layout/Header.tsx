@@ -1,5 +1,6 @@
 import React from 'react';
 import { Menu, Bell, User } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface HeaderProps {
   setIsSidebarOpen: (isOpen: boolean) => void;
@@ -7,19 +8,21 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ setIsSidebarOpen, activeEntity }) => {
+  const { t } = useTranslation();
+  
   const getEntityTitle = (entity: string) => {
     const titles: Record<string, string> = {
-      courses: 'Courses Management',
-      students: 'Students Management',
-      instructors: 'Instructors Management',
-      lessons: 'Lessons Management',
-      exams: 'Exams Management',
-      attendance: 'Attendance Management',
-      studentExams: 'Student Exams Management',
-      recitation: 'Recitation Management',
-      courseFiles: 'Course Files Management',
+      courses: t('titles.coursesManagement'),
+      students: t('titles.studentsManagement'),
+      instructors: t('titles.instructorsManagement'),
+      lessons: t('titles.lessonsManagement'),
+      exams: t('titles.examsManagement'),
+      attendance: t('titles.attendanceManagement'),
+      studentExams: t('titles.studentExamsManagement'),
+      recitation: t('titles.recitationManagement'),
+      courseFiles: t('titles.courseFilesManagement'),
     };
-    return titles[entity] || 'Dashboard';
+    return titles[entity] || t('titles.dashboard');
   };
 
   return (
@@ -32,7 +35,7 @@ export const Header: React.FC<HeaderProps> = ({ setIsSidebarOpen, activeEntity }
           >
             <Menu size={24} />
           </button>
-          <h2 className="text-2xl font-semibold text-[#0e4d3c] ml-2 lg:ml-0">
+          <h2 className="text-2xl font-semibold text-[#0e4d3c] mr-2 lg:mr-0">
             {getEntityTitle(activeEntity)}
           </h2>
         </div>

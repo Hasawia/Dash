@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from 'react-i18next';
 import { Student } from "../../types";
 import { QURAN_PARTS } from "../../constants";
 import { Button } from "../UI/Button";
@@ -19,6 +20,7 @@ export const StudentForm: React.FC<StudentFormProps> = ({
   onCancel,
   validationErrors = {},
 }) => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState<Student>({
     name: "",
     email: "",
@@ -61,7 +63,7 @@ export const StudentForm: React.FC<StudentFormProps> = ({
       formData.password &&
       formData.password !== formData.password_confirmation
     ) {
-      alert("Passwords do not match");
+      alert(t('validation.passwordsDoNotMatch'));
       return;
     }
 
@@ -107,10 +109,10 @@ export const StudentForm: React.FC<StudentFormProps> = ({
     <div className="bg-white rounded-xl shadow-sm border border-gray-100">
       <div className="px-8 py-6 border-b border-gray-100">
         <h3 className="text-xl font-semibold text-gray-900">
-          {initialData ? 'Edit Student' : 'Add New Student'}
+          {initialData ? t('students.editStudent') : t('students.addStudent')}
         </h3>
         <p className="text-sm text-gray-600 mt-1">
-          {initialData ? 'Update the student details below' : 'Fill in the details to register a new student'}
+          {initialData ? 'تحديث تفاصيل الطالب أدناه' : 'املأ التفاصيل لتسجيل طالب جديد'}
         </p>
       </div>
 
@@ -118,12 +120,12 @@ export const StudentForm: React.FC<StudentFormProps> = ({
         {/* Personal Information */}
         <div className="space-y-6">
           <h4 className="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">
-            Personal Information
+            {t('students.personalInformation')}
           </h4>
           
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Input
-          label="Full Name"
+          label={t('students.fullName')}
           value={formData.name}
           onChange={(e) => handleChange("name", e.target.value)}
           required
@@ -131,7 +133,7 @@ export const StudentForm: React.FC<StudentFormProps> = ({
         />
 
         <Input
-          label="Email"
+          label={t('students.email')}
           type="email"
           value={formData.email}
           onChange={(e) => handleChange("email", e.target.value)}
@@ -140,7 +142,7 @@ export const StudentForm: React.FC<StudentFormProps> = ({
         />
         <div className="relative">
           <Input
-            label="Password"
+            label={t('students.password')}
             type={showPassword ? "text" : "password"}
             value={formData.password}
             onChange={(e) => handleChange("password", e.target.value)}
@@ -153,13 +155,13 @@ export const StudentForm: React.FC<StudentFormProps> = ({
             className="absolute right-3 top-[38px] text-sm text-gray-500"
             tabIndex={-1}
           >
-            {showPassword ? "Hide" : "Show"}
+            {showPassword ? t('students.hide') : t('students.show')}
           </button>
         </div>
 
         <div className="relative">
           <Input
-            label="Confirm Password"
+            label={t('students.confirmPassword')}
             type={showConfirmPassword ? "text" : "password"}
             value={formData.password_confirmation}
             onChange={(e) =>
@@ -173,12 +175,12 @@ export const StudentForm: React.FC<StudentFormProps> = ({
             className="absolute right-3 top-[38px] text-sm text-gray-500"
             tabIndex={-1}
           >
-            {showConfirmPassword ? "Hide" : "Show"}
+            {showConfirmPassword ? t('students.hide') : t('students.show')}
           </button>
         </div>
 
         <Input
-          label="Phone Number"
+          label={t('students.phoneNumber')}
           value={formData.phone_number}
           onChange={(e) => handleChange("phone_number", e.target.value)}
           required
@@ -186,7 +188,7 @@ export const StudentForm: React.FC<StudentFormProps> = ({
         />
 
         <Input
-          label="Birth Date"
+          label={t('students.birthDate')}
           type="date"
           value={formData.birth_date}
           onChange={(e) => handleChange("birth_date", e.target.value)}
@@ -195,7 +197,7 @@ export const StudentForm: React.FC<StudentFormProps> = ({
         />
 
         <Input
-          label="Enrollment Date"
+          label={t('students.enrollmentDate')}
           type="date"
           value={formData.enroll_date}
           onChange={(e) => handleChange("enroll_date", e.target.value)}
@@ -208,11 +210,11 @@ export const StudentForm: React.FC<StudentFormProps> = ({
         {/* Contact Information */}
         <div className="space-y-6">
           <h4 className="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">
-            Contact & Address
+            {t('students.contactAddress')}
           </h4>
           
       <Input
-        label="Address"
+        label={t('students.address')}
         value={formData.address}
         onChange={(e) => handleChange("address", e.target.value)}
         required
@@ -223,28 +225,28 @@ export const StudentForm: React.FC<StudentFormProps> = ({
         {/* Academic Information */}
         <div className="space-y-6">
           <h4 className="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">
-            Academic Details
+            {t('students.academicDetails')}
           </h4>
           
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Input
-          label="Certificate"
+          label={t('students.certificate')}
           value={formData.certificate}
           onChange={(e) => handleChange("certificate", e.target.value)}
           error={validationErrors.certificate?.[0]}
         />
         <Input
-          label="Notes"
+          label={t('students.notes')}
           value={formData.notes}
           onChange={(e) => handleChange("notes", e.target.value)}
           error={validationErrors.notes?.[0]}
         />
 
         <FileUpload
-          label="Profile Image"
+          label={t('students.profileImage')}
           value={imageFile}
           onChange={setImageFile}
-          helperText="Upload a profile image"
+          helperText={t('students.uploadProfileImage')}
         />
       </div>
         </div>
@@ -252,25 +254,25 @@ export const StudentForm: React.FC<StudentFormProps> = ({
         {/* Quran Progress */}
         <div className="space-y-6">
           <h4 className="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">
-            Quran Memorization Progress
+            {t('students.quranProgress')}
           </h4>
           
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <MultiSelect
-          label="Quran Memorized Parts"
+          label={t('students.quranMemorizedParts')}
           options={QURAN_PARTS}
           value={formData.quran_memorized_parts}
           onChange={(value) => handleChange("quran_memorized_parts", value)}
-          placeholder="Select memorized parts"
+          placeholder={t('students.selectMemorizedParts')}
           error={validationErrors.quran_memorized_parts?.[0]}
         />
 
         <MultiSelect
-          label="Quran Passed Parts"
+          label={t('students.quranPassedParts')}
           options={QURAN_PARTS}
           value={formData.quran_passed_parts}
           onChange={(value) => handleChange("quran_passed_parts", value)}
-          placeholder="Select passed parts"
+          placeholder={t('students.selectPassedParts')}
           error={validationErrors.quran_passed_parts?.[0]}
         />
       </div>
@@ -279,10 +281,10 @@ export const StudentForm: React.FC<StudentFormProps> = ({
         {/* Form Actions */}
         <div className="flex justify-end space-x-4 pt-6 border-t border-gray-200">
         <Button type="button" variant="secondary" onClick={onCancel}>
-          Cancel
+          {t('common.cancel')}
         </Button>
         <Button type="submit" loading={loading} size="lg">
-          {initialData ? "Update Student" : "Create Student"}
+          {initialData ? t('students.updateStudent') : t('students.createStudent')}
         </Button>
       </div>
       </form>

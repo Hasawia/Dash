@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Plus, Search } from "lucide-react";
+import { useTranslation } from 'react-i18next';
 import { Student } from "../../types";
 import { apiService } from "../../services/api";
 import { Button } from "../UI/Button";
@@ -9,6 +10,7 @@ import { Table } from "../UI/Table";
 import { StudentForm } from "../Forms/StudentForm";
 
 export const StudentManagement: React.FC = () => {
+  const { t } = useTranslation();
   const [students, setStudents] = useState<Student[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -60,7 +62,7 @@ export const StudentManagement: React.FC = () => {
   };
 
   const handleDelete = async (student: Student) => {
-    if (window.confirm("Are you sure you want to delete this student?")) {
+    if (window.confirm(t('validation.confirmDeleteStudent'))) {
       try {
         await apiService.delete("students", student.id!);
         await fetchStudents();
@@ -79,7 +81,7 @@ export const StudentManagement: React.FC = () => {
   const columns = [
     {
       key: "name",
-      label: "Name",
+      label: t('students.name'),
       render: (value: string, row: Student) => (
         <div className="flex items-center space-x-3">
           {row.student_img && (
@@ -93,15 +95,15 @@ export const StudentManagement: React.FC = () => {
         </div>
       ),
     },
-    { key: "email", label: "Email" },
-    { key: "phone_number", label: "Phone" },
-    { key: "enroll_date", label: "Enrollment Date" },
+    { key: "email", label: t('students.email') },
+    { key: "phone_number", label: t('students.phone') },
+    { key: "enroll_date", label: t('students.enrollmentDate') },
     {
       key: "quran_memorized_parts",
-      label: "Memorized Parts",
+      label: t('students.memorizedParts'),
       render: (value: number[] | null | undefined) => (
         <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">
-          {value?.length || 0} parts
+          {value?.length || 0} {t('students.parts')}
         </span>
       ),
     },
@@ -112,21 +114,18 @@ export const StudentManagement: React.FC = () => {
       <div className="flex justify-between items-center">
         <div className="flex items-center space-x-4">
           <div className="relative">
-            <Search
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-              size={20}
-            />
+            <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
             <Input
-              placeholder="Search students..."
+              placeholder={t('students.searchStudents')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 w-64"
+              className="pr-10 w-64"
             />
           </div>
         </div>
         <Button onClick={() => setIsModalOpen(true)}>
           <Plus size={20} className="mr-2" />
-          Add Student
+          {t('students.addStudent')}
         </Button>
       </div>
 
@@ -147,7 +146,7 @@ export const StudentManagement: React.FC = () => {
           setIsModalOpen(false);
           setEditingStudent(null);
         }}
-        title={editingStudent ? "Edit Student" : "Add New Student"}
+        title={editingStudent ? t('students.editStudent') : t('students.addStudent')}
         size="lg"
       >
         <StudentForm

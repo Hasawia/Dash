@@ -25,7 +25,7 @@ export const Input: React.FC<InputProps> = ({
       )}
       <div className="relative">
         {icon && (
-          <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+          <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
             {icon}
           </div>
         )}
@@ -34,7 +34,7 @@ export const Input: React.FC<InputProps> = ({
             w-full px-4 py-3 border rounded-lg shadow-sm transition-all duration-200
             focus:outline-none focus:ring-2 focus:ring-[#0e4d3c] focus:border-transparent
             hover:shadow-md
-            ${icon ? 'pl-10' : ''}
+            ${icon ? 'pr-10' : ''}
             ${error 
               ? 'border-red-300 bg-red-50 focus:ring-red-500' 
               : 'border-gray-300 bg-white hover:border-gray-400'

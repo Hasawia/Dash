@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown, X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface Option {
   value: string | number;
@@ -23,6 +24,7 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
   placeholder = "Select options",
   error
 }) => {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
 
   const selectedOptions = options.filter(option => value.includes(option.value));
@@ -61,7 +63,7 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
         >
           <div className="flex flex-wrap gap-1">
             {selectedOptions.length === 0 ? (
-              <span className="text-gray-500 py-1">{placeholder}</span>
+              <span className="text-gray-500 py-1">{placeholder || t('common.selectOption')}</span>
             ) : (
               selectedOptions.map(option => (
                 <span
@@ -74,7 +76,7 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
                       e.stopPropagation();
                       removeOption(option.value);
                     }}
-                    className="ml-2 hover:text-gray-300 transition-colors"
+                    className="mr-2 hover:text-gray-300 transition-colors"
                   >
                     <X size={12} />
                   </button>
@@ -82,7 +84,7 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
               ))
             )}
           </div>
-          <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+          <div className="absolute inset-y-0 left-0 flex items-center pl-3">
             <ChevronDown 
               size={20} 
               className={`transform transition-transform text-gray-400 ${isOpen ? 'rotate-180' : ''}`} 

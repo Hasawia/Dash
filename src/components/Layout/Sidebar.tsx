@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { 
   BookOpen, 
   Users, 
@@ -20,24 +21,26 @@ interface SidebarProps {
   setIsOpen: (isOpen: boolean) => void;
 }
 
-const navigationItems = [
-  { id: 'courses', label: 'Courses', icon: BookOpen },
-  { id: 'students', label: 'Students', icon: Users },
-  { id: 'instructors', label: 'Instructors', icon: GraduationCap },
-  { id: 'lessons', label: 'Lessons', icon: Calendar },
-  { id: 'exams', label: 'Exams', icon: FileText },
-  { id: 'attendance', label: 'Attendance', icon: CheckSquare },
-  { id: 'studentExams', label: 'Student Exams', icon: Award },
-  { id: 'recitation', label: 'Recitation', icon: Mic },
-  { id: 'courseFiles', label: 'Course Files', icon: FolderOpen },
-];
-
 export const Sidebar: React.FC<SidebarProps> = ({ 
   activeEntity, 
   setActiveEntity, 
   isOpen, 
   setIsOpen 
 }) => {
+  const { t } = useTranslation();
+  
+  const navigationItems = [
+    { id: 'courses', label: t('navigation.courses'), icon: BookOpen },
+    { id: 'students', label: t('navigation.students'), icon: Users },
+    { id: 'instructors', label: t('navigation.instructors'), icon: GraduationCap },
+    { id: 'lessons', label: t('navigation.lessons'), icon: Calendar },
+    { id: 'exams', label: t('navigation.exams'), icon: FileText },
+    { id: 'attendance', label: t('navigation.attendance'), icon: CheckSquare },
+    { id: 'studentExams', label: t('navigation.studentExams'), icon: Award },
+    { id: 'recitation', label: t('navigation.recitation'), icon: Mic },
+    { id: 'courseFiles', label: t('navigation.courseFiles'), icon: FolderOpen },
+  ];
+  
   return (
     <>
       {/* Mobile overlay */}
@@ -84,7 +87,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   }
                 `}
               >
-                <Icon size={20} className="mr-3" />
+                <Icon size={20} className="ml-3" />
                 <span className="font-medium">{item.label}</span>
               </button>
             );
